@@ -25,63 +25,91 @@ function pedir(){
 }
 
 function jugar(){
-    let again = true;
+    again = true;
     let x = 0;
-    repartir()
-    alert(`Tus cartas son: ${carta1} y ${carta2}. Suman ${mano}
-    La Casa tiene un ${cartaPc} y una carta oculta.`)
-    if(mano === 21){
-        alert("Blackjack! Ganaste!")
-        won += 1;
-        x = prompt("Seguir jugando? SI - NO")
-        while(x === "SI"){
-            jugar();
-        }
-    }
     do{
-        let op = prompt("Pedir carta o quedarse?");
-        if(op == "pedir"){
-            pedir();
-            alert(`Tu carta es un ${carta1} y tu mano vale ${mano}`);
-            if(mano === 21){
-                alert("Blackjack")
-                x = prompt("Seguir jugando? Si - No")
-                while(x === "SI"){
-                    jugar();
-                }
+        repartir()
+        alert(`Tus cartas son: ${carta1} y ${carta2}. Suman ${mano}. La Casa tiene un ${cartaPc} y una carta oculta.`)
+        if(mano === 21){
+            alert("Blackjack! Ganaste!")
+            won++;
+            x = prompt("Seguir jugando? SI - NO")
+            if(x === "SI"){
+                again = true;
+            }else if(x === "NO"){
+                fin()
+                again = false;
             }
-        }else if(op === "quedarse"){
-            alert(`Te quedaste con ${mano}. La Casa tiene ${manoPc}`)
-            if(mano === 21){
-                alert("Blackjack")
-                x = prompt("Seguir jugando? Si - No")
-                while(x === "SI"){
-                    jugar();
-                }
-            }else if(mano<manoPc){
-                alert(`La casa gana con ${manoPc}`)
-                x = prompt("Seguir jugando? Si - No")
-                while(x === "SI"){
-                    jugar();
-                }
-            }else if(mano>manoPc){
-                alert(`Ganaste con ${mano}`)                
-                won+=1;
-                x = prompt("Seguir jugando? Si - No")
-                while(x === "SI"){
-                    jugar();
+        }
+        while(mano!=21 && mano<21){
+            let op = prompt("PEDIR carta o QUEDARSE?");    
+            if(op == "pedir"){
+                pedir();
+                alert(`Tu carta es un ${carta1} y tu mano vale ${mano}`);
+                if(mano === 21){
+                    alert("BLACKJACK!")
+                    x = prompt("Seguir jugando? SI - NO")
+                    if(x === "SI"){
+                        again = true;
+                        break;
+                    }else if(x === "NO"){
+                        fin()
+                        again = false;
+                        break;
+                    }
+                }else if(mano>21){
+                    alert("Te pasaste!");
+                    lost += 1;
+                    x = prompt("Seguir jugando? Si - No")
+                    if(x === "SI"){
+                        again = true;
+                        break;
+                    }else if(x === "NO"){
+                        fin()
+                        again = false;
+                        break;
+                    }   
+                } 
+            }else if(op === "quedarse"){
+                alert(`Te quedaste con ${mano}. La Casa tiene ${manoPc}`)
+                if(mano === 21){
+                    alert("Blackjack")
+                    x = prompt("Seguir jugando? Si - No")
+                    if(x === "SI"){
+                        again = true;
+                        break;
+                    }else if(x === "NO"){
+                        fin()
+                        again = false;
+                        break;
+                    }
+                }else if(mano<manoPc){
+                        alert(`La casa gana con ${manoPc}`)
+                        x = prompt("Seguir jugando? Si - No")
+                        if(x === "SI"){
+                            again = true;
+                            break;
+                        }else if(x === "NO"){
+                            fin()
+                            again = false;
+                            break;
+                        }
+                }else if(mano>manoPc){
+                        alert(`Ganaste con ${mano}`)                
+                        won+=1;
+                        x = prompt("Seguir jugando? Si - No")
+                        if(x === "SI"){
+                            again = true;
+                            break;
+                        }else if(x === "NO"){
+                            fin()
+                            again = false;
+                            break;
+                        }
                 }
             }
         }
-    } while(mano<21);
-    if(mano>21){
-        alert("Te pasaste!");
-        lost += 1;
-        x = prompt("Seguir jugando? Si - No")
-         while(x === "SI"){
-                jugar()
-        }
-    }
+    }while(again==true);
 }
 
 
