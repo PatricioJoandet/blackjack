@@ -43,11 +43,11 @@ function jugar(){
         }
         while(mano!=21 && mano<21){
             let op = prompt("PEDIR carta o QUEDARSE?");    
-            if(op == "pedir"){
+            if(op == "PEDIR"){
                 pedir();
                 alert(`Tu carta es un ${carta1} y tu mano vale ${mano}`);
                 if(mano === 21){
-                    alert("BLACKJACK!")
+                    alert("BLACKJACK! Ganaste!")
                     x = prompt("Seguir jugando? SI - NO")
                     if(x === "SI"){
                         again = true;
@@ -60,7 +60,7 @@ function jugar(){
                 }else if(mano>21){
                     alert("Te pasaste!");
                     lost += 1;
-                    x = prompt("Seguir jugando? Si - No")
+                    x = prompt("Seguir jugando? SI - No")
                     if(x === "SI"){
                         again = true;
                         break;
@@ -70,11 +70,31 @@ function jugar(){
                         break;
                     }   
                 } 
-            }else if(op === "quedarse"){
+            }else if(op === "QUEDARSE"){
                 alert(`Te quedaste con ${mano}. La Casa tiene ${manoPc}`)
+                if(manoPc <= 16){
+                    while(manoPc<17){
+                        alert("La casa pide una carta")
+                        manoPc += Math.floor(Math.random() * (11 - 1) + 1);
+                        alert(`La casa tiene ${manoPc}`)
+                    }
+                }   
+                    if(manoPc>21){
+                    alert(`La casa se pasó con ${manoPc}. Ganaste!`)
+                    won++;
+                    x = prompt("Seguir jugando? SI - No")
+                    if(x === "SI"){
+                        again = true;
+                        break;
+                    }else if(x === "NO"){
+                        fin()
+                        again = false;
+                        break;
+                    }   
+                }               
                 if(mano === 21){
-                    alert("Blackjack")
-                    x = prompt("Seguir jugando? Si - No")
+                    alert("BLACKJACK! Ganaste!")
+                    x = prompt("Seguir jugando? SI - No")
                     if(x === "SI"){
                         again = true;
                         break;
@@ -84,28 +104,41 @@ function jugar(){
                         break;
                     }
                 }else if(mano<manoPc){
-                        alert(`La casa gana con ${manoPc}`)
-                        x = prompt("Seguir jugando? Si - No")
-                        if(x === "SI"){
-                            again = true;
-                            break;
-                        }else if(x === "NO"){
-                            fin()
-                            again = false;
-                            break;
-                        }
+                    alert(`La casa gana con ${manoPc}`)
+                    lost++;
+                    x = prompt("Seguir jugando? SI - No")
+                    if(x === "SI"){
+                        again = true;
+                        break;
+                    }else if(x === "NO"){
+                        fin()
+                        again = false;
+                        break;
+                    }
                 }else if(mano>manoPc){
-                        alert(`Ganaste con ${mano}`)                
-                        won+=1;
-                        x = prompt("Seguir jugando? Si - No")
-                        if(x === "SI"){
-                            again = true;
-                            break;
-                        }else if(x === "NO"){
-                            fin()
-                            again = false;
-                            break;
-                        }
+                    alert(`Ganaste con ${mano}!`)                
+                    won+=1;
+                    x = prompt("Seguir jugando? SI - No")
+                    if(x === "SI"){
+                        again = true;
+                        break;
+                    }else if(x === "NO"){
+                        fin()
+                        again = false;
+                        break;
+                    }
+                }else if(mano===manoPc){
+                    alert("Empate");
+                    draw++;
+                    x = prompt("Seguir jugando? SI - No")
+                    if(x === "SI"){
+                        again = true;
+                        break;
+                    }else if(x === "NO"){
+                        fin()
+                        again = false;
+                        break;
+                    }
                 }
             }
         }
@@ -114,7 +147,7 @@ function jugar(){
 
 
 function inicio(){
-    alert("Mesa de Blackjack. El objetivo es llegar a 21, o lo mas cercano, sin pasarse. Si te pasas, perdes.")
+    alert("Mesa de Blackjack. El objetivo es llegar a 21, o lo mas cercano, sin pasarse. si te pasas, perdes.")
     jugar();
 }
 
